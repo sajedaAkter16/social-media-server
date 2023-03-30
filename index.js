@@ -16,13 +16,27 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 async function run(){
   try{
     const userCollection=client.db('social_media').collection('users'); // wait ok
+    const postCollection=client.db('social_media').collection('posts'); // wait ok
 
     // users info
     app.post('/users', async(req,res)=>{
       const user=req.body;
     
       const response = await userCollection.insertOne(user);
-      console.log(response);
+      res.send(response);
+    })
+
+    // all post
+    app.post('/posts', async(req,res)=>{
+      const post=req.body;
+      const response = await postCollection.insertOne(post);
+      res.send(response);
+    })
+
+    app.get('/posts',async(req,res)=>{
+      const query={};
+      const result=await postCollection.find(query).toArray();
+      res.send(result)
     })
   }
   finally{
