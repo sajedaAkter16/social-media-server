@@ -32,6 +32,12 @@ async function run(){
       res.send(users)
     })
 
+    app.get('/users/:id',async(req,res)=>{
+      const query={_id:new ObjectId(req.params.id)}
+      const result=await userCollection.findOne(query)
+      res.send(result)
+    })
+
     // all post
     app.post('/posts', async(req,res)=>{
       const post=req.body;
@@ -39,13 +45,11 @@ async function run(){
       res.send(response);
     })
 
-    // app.get('/users/:id',async(req,res)=>{
-    //   const id=req.params.id;
-    //   const query={_id:ObjectId(id)};
-    //   const users=await userCollection.findOne(query)
-    //   res.send(users)
-
-    // })
+    app.get('/posts/:id',async(req,res)=>{
+      const query={_id:new ObjectId(req.params.id)}
+      const result=await postCollection.findOne(query)
+      res.send(result)
+    })
 
     app.get('/posts',async(req,res)=>{
       const query={};
@@ -65,12 +69,7 @@ async function run(){
       res.send(result)
     })
 
-    app.get('/posts/:id',async(req,res)=>{
-      // const id=req.params.id;
-      const query={_id:new ObjectId(req.params.id)}
-      const result=await postCollection.findOne(query)
-      res.send(result)
-    })
+   
   }
   finally{
 
